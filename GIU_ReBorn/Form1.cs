@@ -117,7 +117,12 @@ namespace GIU_ReBorn
                 {
                     serialPort1.WriteLine("*GM1#");
                 }
-                //else if (komando gerakan)
+                    /*
+                else if (command.Substring(0,3).CompareTo("*GF")//(komando gerakan)
+                     * {
+                     *      
+                     * }
+                     */
             }
             catch
             {
