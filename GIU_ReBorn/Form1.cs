@@ -54,6 +54,10 @@ namespace GIU_ReBorn
         string _clientPort = "11114";
         Int16 buffertick;
         string dataIN1="tes";
+        /// <summary>
+        ///Handler data queue
+        /// </summary>
+        Queue<string> dataBuffer = new Queue<string>();
 
         public Form1()
         {
@@ -75,7 +79,42 @@ namespace GIU_ReBorn
             // Enable Event Handler port 2
             //serialPort2.DataReceived += new SerialDataReceivedEventHandler(serialPort2_DataReceived);
         }
-
+        /// <summary>
+        /// Algoritma pemrosesan Queue pada GIU
+        /// </summary>
+        /// 
+        private void processQueue(string output)
+        {
+             if (dataBuffer.Count > 0)
+            {
+                output = dataBuffer.Dequeue();
+                //datatoTCP = output;
+                //Pemilihan metode pemrosesan data antrian sistem
+                try //Penambahan try catch agar system tidak error saat gagal
+                {
+                    if (output.Substring(0, 2).CompareTo("S1") == 0)
+                    {
+                        parsingSerial(output.Substring(2, output.Length - 2), 1);
+                    }
+                    else if (output.Substring(0, 2).CompareTo("F") == 0)
+                    {
+                        ///FCSPROCESS, FOR NOW ONLY WRITE IT TO MERIAM
+                       serialPort1.WriteLine(output.Substring(1, output.Length-1));
+                    }
+                }
+                catch
+                {
+                    return;
+                }
+                
+            }
+           
+        }
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            processQueue(dataIN1);
+            //serialPort1.WriteLine("woii apa kabar");
+        }
         private void initSerial()
         {
 
@@ -90,12 +129,6 @@ namespace GIU_ReBorn
                 serialPort1.Open();
                 //serialPort1.WriteBufferSize = 1000;
                
-
-                serialPort2.PortName = "COM2";
-                serialPort2.BaudRate = 9600;
-                serialPort2.ReadTimeout = 2000;
-                serialPort2.Open();
-
             }
             catch (Exception)
             {
@@ -123,42 +156,25 @@ namespace GIU_ReBorn
 
                 if (dataSerialIn.Length != 0)
                 {
-                    this.Invoke((System.Threading.ThreadStart)delegate
-                    {
-                        textBox4.Text = dataSerialIn;
-                        parsingSerial(dataSerialIn, 1);
-                        dataIN1 = dataSerialIn; //Baru
-                        // Console.WriteLine(dataSerialIn);
-                        { }
-                    });
+                    ///
+                    /// Dicomment agar tidak membebani sistem dengan thread baru, dialihkan ke queue
+                    ///
+                    //this.Invoke((System.Threading.ThreadStart)delegate
+                    //{
+                    //    textBox4.Text = dataSerialIn;
+                    //    parsingSerial(dataSerialIn, 1);
+                    //    dataIN1 = dataSerialIn; //Baru
+                    //    // Console.WriteLine(dataSerialIn);
+                    //    { }
+                    //});
+
+                    dataBuffer.Enqueue("S1" + dataSerialIn);
                 }
             }
             catch
             {
                 return;
                 //MessageBox.Show("Could not read COM Port");
-            }
-
-        }
-
-        private void serialPort2_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            try
-            {
-                string dataSerialIn = serialPort2.ReadExisting();
-               
-                if (dataSerialIn.Length != 0)
-                {
-                    this.Invoke((System.Threading.ThreadStart)delegate
-                    {
-                        // Console.WriteLine(dataSerialIn);
-                        { }
-                    });
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Could not read COM Port");
             }
 
         }
@@ -179,7 +195,7 @@ namespace GIU_ReBorn
             {
                 textBox5.Text = data;
             }
-
+            sendToFCS(data);
             //if (data == "data azimuth & elevasi")
 
             ///ASUMSI FORMAT SELALU *GY,XXX,ZZZ)
@@ -221,12 +237,15 @@ namespace GIU_ReBorn
             try
             {
                 tcpClientSocket.Send(clientTransmitBuffer, totalNumberOfBytes, SocketFlags.None);       ///< Sends data.
+                realconnect = true;
+                totalBytez = 1;
             }
             catch
             {
                 //Biar bisa jadi metode kroscek apakah tersambung / tidak
                 clientReceivedBytes.Text = "Fail";
                 totalBytez = 0;
+                realconnect = false;
                 return;
             }
             // clientSentBytes.Text = Convert.ToString(totalNumberOfBytes);
@@ -248,8 +267,6 @@ namespace GIU_ReBorn
                 serialPort1.DataReceived += new SerialDataReceivedEventHandler(serialPort1_DataReceived);
             }
             counterNetwork.Text = connectioncounter.ToString();
-            
-            
         }
 
         /// <summary>
@@ -259,12 +276,21 @@ namespace GIU_ReBorn
         /// <param name="e"></param>
         private void timer2_Tick(object sender, EventArgs e)
         {
-            if ((totalBytez == 0) || (openConnection==false))
+            if ((totalBytez == 0) || (openConnection == false))
             {
                 if (connectioncounter < 3)
                 {
                     connectioncounter++;
                     serialPort1.DataReceived -= new SerialDataReceivedEventHandler(serialPort1_DataReceived);
+                    //Mekanisme reset connection counter
+                    try
+                    {
+                        sendToFCS("a");
+                    }
+                    catch
+                    {
+                        return;
+                    }
                 }
                 else
                 {
@@ -275,91 +301,11 @@ namespace GIU_ReBorn
                     //    serialPort1.DataReceived -= new SerialDataReceivedEventHandler(serialPort1_DataReceived);
                     //}
                     clientCloseConnection();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     clientOpenConnection(_clientIPAddress, _clientPort);
                     connectioncounter = 0;
                 }
             }
-            else
+            else if (dataBuffer.Count > 0) //Mengirimkan hanya saat tidak ada antrian
             {
                 connectioncounter = 0;
                 //sendToFCS("a");
@@ -378,9 +324,6 @@ namespace GIU_ReBorn
                 serialPort1.DiscardInBuffer();
                 buffertick = 0;
             }
-
-
-            
         }
 
         bool ValidateIPAddress(string ipAddress)
@@ -604,7 +547,8 @@ namespace GIU_ReBorn
                // totalBytesRecBox.Text = totalBytesReceived.ToString();
                 totalBytesStringFormat = totalBytesReceived.ToString();
                 dataReceivedStringFormat = Encoding.UTF8.GetString(clientReceiveBuffer, 0, totalBytesReceived);
-                
+                //Memasukkan data dari FCS ke Buffer
+                dataBuffer.Enqueue("F" + dataReceivedStringFormat);
                 UpdateClientFormControls(totalBytesStringFormat, dataReceivedStringFormat, false);
             }
         }
@@ -627,10 +571,8 @@ namespace GIU_ReBorn
             //clientReceivedBytes.Text = totalBytes;
             //
             // Console.WriteLine(dataReceived);
-            //byte[] dataq = Encoding.UTF8.GetBytes(dataReceived);
-            receivedDataClient.Text = dataReceived;
-            //receivedDataClient.Text = dataq.ToString();
-            serialPort1.WriteLine(dataReceived);
+            receivedDataClient.Text = dataReceived;           
+            //serialPort1.WriteLine(dataReceived);
             receivedDataClient.SelectionStart = receivedDataClient.Text.Length;
             //totalBytesRecBox.Text = realconnect.ToString();
             //totalBytesRecBox.Text = totalBytez.ToString();
@@ -658,10 +600,6 @@ namespace GIU_ReBorn
             sendToFCS(clientDataToSend.Text);
         }
 
-        private void timer3_Tick(object sender, EventArgs e)
-        {
-            //serialPort1.WriteLine("woii apa kabar");
-        }
 
     }
 }
