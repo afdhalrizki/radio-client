@@ -1,0 +1,40 @@
+D:\workspaces\SDS\s60\GIU_ReBorn\GIU_ReBorn\bin\Debug\GIU_ReBorn.exe
+D:\workspaces\SDS\s60\GIU_ReBorn\GIU_ReBorn\bin\Debug\GIU_ReBorn.pdb
+D:\workspaces\SDS\s60\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.csprojResolveAssemblyReference.cache
+D:\workspaces\SDS\s60\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.Form1.resources
+D:\workspaces\SDS\s60\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.Properties.Resources.resources
+D:\workspaces\SDS\s60\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.csproj.GenerateResource.Cache
+D:\workspaces\SDS\s60\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.exe
+D:\workspaces\SDS\s60\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.pdb
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\bin\Debug\GIU_ReBorn.exe
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\bin\Debug\GIU_ReBorn.pdb
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.csprojResolveAssemblyReference.cache
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.Form1.resources
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.Properties.Resources.resources
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.csproj.GenerateResource.Cache
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.exe
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.pdb
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\AFTER_281120\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\bin\Debug\GIU_ReBorn.exe
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\AFTER_281120\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\bin\Debug\GIU_ReBorn.pdb
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\AFTER_281120\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.csprojResolveAssemblyReference.cache
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\AFTER_281120\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.Form1.resources
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\AFTER_281120\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.Properties.Resources.resources
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\AFTER_281120\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.csproj.GenerateResource.Cache
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\AFTER_281120\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.exe
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\AFTER_281120\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.pdb
+D:\workspaces\SDS\s60\ReBorn\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\bin\Debug\GIU_ReBorn.exe
+D:\workspaces\SDS\s60\ReBorn\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\bin\Debug\GIU_ReBorn.pdb
+D:\workspaces\SDS\s60\ReBorn\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.csprojResolveAssemblyReference.cache
+D:\workspaces\SDS\s60\ReBorn\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.Form1.resources
+D:\workspaces\SDS\s60\ReBorn\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.Properties.Resources.resources
+D:\workspaces\SDS\s60\ReBorn\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.csproj.GenerateResource.Cache
+D:\workspaces\SDS\s60\ReBorn\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.exe
+D:\workspaces\SDS\s60\ReBorn\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.pdb
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\06-12-2020\06-12-2020\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\bin\Debug\GIU_ReBorn.exe
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\06-12-2020\06-12-2020\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\bin\Debug\GIU_ReBorn.pdb
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\06-12-2020\06-12-2020\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.csprojResolveAssemblyReference.cache
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\06-12-2020\06-12-2020\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.Form1.resources
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\06-12-2020\06-12-2020\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.Properties.Resources.resources
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\06-12-2020\06-12-2020\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.csproj.GenerateResource.Cache
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\06-12-2020\06-12-2020\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.exe
+D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\06-12-2020\06-12-2020\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.pdb
