@@ -100,15 +100,29 @@ namespace GIU_ReBorn
                     {
                         ///FCSPROCESS, FOR NOW ONLY WRITE IT TO MERIAM
                        serialPort1.WriteLine(output.Substring(1, output.Length-1));
+                        //processFCS(output);
                     }
                 }
                 catch
                 {
                     return;
-                }
-                
+                }   
             }
-           
+        }
+        private void processFCS(string command)
+        {
+            try
+            {
+                if (command.Substring(0,4).CompareTo("*GM1#") == 0)
+                {
+                    serialPort1.WriteLine("*GM1#");
+                }
+                //else if (komando gerakan)
+            }
+            catch
+            {
+                return;
+            }
         }
         private void timer3_Tick(object sender, EventArgs e)
         {
