@@ -99,7 +99,7 @@ namespace GIU_ReBorn
                     else if (output.Substring(0, 2).CompareTo("F") == 0)
                     {
                         ///FCSPROCESS, FOR NOW ONLY WRITE IT TO MERIAM
-                       serialPort1.WriteLine(output.Substring(0, output.Length));
+                       serialPort1.Write(output.Substring(0, output.Length));
                         //processFCS(output);
                     }
                 }
@@ -195,7 +195,6 @@ namespace GIU_ReBorn
                 return;
                 //MessageBox.Show("Could not read COM Port");
             }
-
         }
 
         private void parsingSerial(string data, int serialNo)
