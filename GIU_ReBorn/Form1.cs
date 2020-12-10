@@ -10,7 +10,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using System.IO.Ports;
-
+using System.Text.RegularExpressions;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
@@ -26,7 +26,7 @@ namespace GIU_ReBorn
         public static bool local = false;
         public Int32 numberOfBytesRead = 0;
 
-        private const Int32 bufferSize = 100000;
+        private const Int32 bufferSize = 20;
         private const Int32 timeoutMsec = 2500;
 
 
@@ -50,8 +50,8 @@ namespace GIU_ReBorn
         private Int32 totalBytez = 0;
         private Int32 connectioncounter = 0;
 
-        string _clientIPAddress = "192.168.1.33";
-        string _clientPort = "11114";
+        string _clientIPAddress = "192.168.1.61";
+        string _clientPort = "11111";
         Int16 buffertick;
         string dataIN1="tes";
         /// <summary>
@@ -64,13 +64,11 @@ namespace GIU_ReBorn
 
             InitializeComponent();
             initSerial();
-
             // Looking to server connection in the first run
             clientOpenConnection(_clientIPAddress, _clientPort);
             timer1.Enabled = true;
             timer2.Enabled = true;
-            timer3.Enabled = false;
-
+            timer3.Enabled = true;
             if (realconnect)
             {
                 // Enable Event Handler port 1
@@ -85,9 +83,11 @@ namespace GIU_ReBorn
         /// 
         private void processQueue(string output)
         {
-             if (dataBuffer.Count > 0)
+            if (dataBuffer.Count > 0)
             {
                 output = dataBuffer.Dequeue();
+                textBox5.Text = output;
+                Console.Write(output);
                 //datatoTCP = output;
                 //Pemilihan metode pemrosesan data antrian sistem
                 try //Penambahan try catch agar system tidak error saat gagal
@@ -99,7 +99,7 @@ namespace GIU_ReBorn
                     else if (output.Substring(0, 2).CompareTo("F") == 0)
                     {
                         ///FCSPROCESS, FOR NOW ONLY WRITE IT TO MERIAM
-                       serialPort1.WriteLine(output.Substring(1, output.Length-1));
+                       serialPort1.WriteLine(output.Substring(0, output.Length));
                         //processFCS(output);
                     }
                 }
@@ -160,7 +160,7 @@ namespace GIU_ReBorn
         private void Form1_Closed(object sender, EventArgs e)
         {
             // Close All client connections (close all client connection)
-            //threadClientSide.Abort();
+            threadClientSide.Abort();
             clientCloseConnection();
             serialPort1.Close();
             serialPort2.Close();
@@ -258,6 +258,7 @@ namespace GIU_ReBorn
                 tcpClientSocket.Send(clientTransmitBuffer, totalNumberOfBytes, SocketFlags.None);       ///< Sends data.
                 realconnect = true;
                 totalBytez = 1;
+                connectioncounter = 0;
             }
             catch
             {
@@ -301,7 +302,7 @@ namespace GIU_ReBorn
                 {
                     connectioncounter++;
                     serialPort1.DataReceived -= new SerialDataReceivedEventHandler(serialPort1_DataReceived);
-                    //Mekanisme reset connection counter
+                    //Mekanisme reset connection counter 
                     try
                     {
                         sendToFCS("a");
@@ -512,7 +513,7 @@ namespace GIU_ReBorn
 
         /// <summary>
         /// Prosedur untuk menerima data dari server sebagai client
-        /// 
+        /// Dinyalakan saat klien aktif
         /// </summary>
         /// <param name="clientSocket"></param>
         private void ClientReceiveProcedure(Socket clientSocket)
@@ -522,20 +523,17 @@ namespace GIU_ReBorn
             string dataReceivedStringFormat = null;
             while (true)
             {
-                
-              
                 try
                 {
                     /// Receives over asynchronous socket.
                     totalBytesReceived = clientSocket.Receive(clientReceiveBuffer, bufferSize, SocketFlags.None);
-                    
                     totalBytez = totalBytesReceived;
-                    if (totalBytesReceived >= 30000)
-                    {
-                        clientReceiveBuffer = null;
-                        totalBytesReceived = 0;
-                        totalBytez = totalBytesReceived;
-                    }
+                    //if (totalBytesReceived >= 30000)
+                    //{
+                    //    clientReceiveBuffer = null;
+                    //    totalBytesReceived = 0;
+                    //    totalBytez = totalBytesReceived;
+                    //}
                 }
 
                 catch
@@ -562,25 +560,65 @@ namespace GIU_ReBorn
                 {
                     realconnect = true;
                 }
-                
-               // totalBytesRecBox.Text = totalBytesReceived.ToString();
+
+                // totalBytesRecBox.Text = totalBytesReceived.ToString();
                 totalBytesStringFormat = totalBytesReceived.ToString();
                 dataReceivedStringFormat = Encoding.UTF8.GetString(clientReceiveBuffer, 0, totalBytesReceived);
                 //Memasukkan data dari FCS ke Buffer
-                dataBuffer.Enqueue("F" + dataReceivedStringFormat);
+                //dataBuffer.Enqueue("F" + dataReceivedStringFormat);
+                string[] dataq = dataReceivedStringFormat.Split('\n');
+                foreach (string word in dataq)
+                {
+                    dataBuffer.Enqueue('F' + word + '\n');
+                }
                 UpdateClientFormControls(totalBytesStringFormat, dataReceivedStringFormat, false);
             }
         }
-
         /// Procedure to update the form controls from other thread.
         private void UpdateClientFormControls(string totalBytes, string dataReceived, bool clientConnect)
         {
             object sender = null;
             if (InvokeRequired)
             {
-                this.Invoke(new Action<string, string, bool>(UpdateClientFormControls), new object[] { totalBytes, dataReceived, clientConnect });
-                return;
+                try
+                {
+                    this.Invoke(new Action<string, string, bool>(UpdateClientFormControls), new object[] { totalBytes, dataReceived, clientConnect });
+                    return;
+                }
+                catch
+                {
+                    return;
+                }
             }
+            //string[] dataq = dataReceived.Split('\n');
+            //foreach (string word in dataq)
+            //{
+            //    dataBuffer.Enqueue('F' + word + '\n');
+            //}
+            //dataBuffer.Enqueue("F"+dataReceived);
+            //int result3 = dataReceived.ToCharArray().Count(c => c == '\n');
+            ////int result3 = dataReceived.Split('\n').Length;
+            //if (result3 == 1)
+            //{
+            //    dataBuffer.Enqueue("F" + dataReceived);
+            //}
+            //else
+            //{
+            //    string dataq = string.Empty;
+            //    int idx = 0;
+            //    while (idx < dataReceived.Length)
+            //    {
+            //        while (dataReceived[idx].CompareTo(Environment.NewLine) != 0)
+            //        {
+            //            dataq += dataReceived[idx];
+            //            idx++;
+            //        }
+            //        dataq += Environment.NewLine;
+            //        dataBuffer.Enqueue("F" + dataq);
+            //        //Console.Write(dataBuffer.Peek());
+            //        dataq = string.Empty;
+            //    }
+            //}
             //Algoritma pelemparan data yang didapat ke serial
             textBox3.Text = dataReceived;
             //if (openConnection)
@@ -618,7 +656,5 @@ namespace GIU_ReBorn
         {
             sendToFCS(clientDataToSend.Text);
         }
-
-
     }
 }

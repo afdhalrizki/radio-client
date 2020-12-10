@@ -38,3 +38,11 @@ D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\06-12-2020\06-12-2020\GIU_ReBorn
 D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\06-12-2020\06-12-2020\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.csproj.GenerateResource.Cache
 D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\06-12-2020\06-12-2020\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.exe
 D:\S60\Toradex\Project\SYSTEM AKHIR KAYANYA SIH\06-12-2020\06-12-2020\GIU_ReBorn_2811_FINAL0\GIU_ReBorn\GIU_ReBorn\GIU_ReBorn\obj\Debug\GIU_ReBorn.pdb
+D:\S60\GITHUB\radio-client\GIU_ReBorn\bin\Debug\GIU_ReBorn.exe
+D:\S60\GITHUB\radio-client\GIU_ReBorn\bin\Debug\GIU_ReBorn.pdb
+D:\S60\GITHUB\radio-client\GIU_ReBorn\obj\Debug\GIU_ReBorn.csprojResolveAssemblyReference.cache
+D:\S60\GITHUB\radio-client\GIU_ReBorn\obj\Debug\GIU_ReBorn.Form1.resources
+D:\S60\GITHUB\radio-client\GIU_ReBorn\obj\Debug\GIU_ReBorn.Properties.Resources.resources
+D:\S60\GITHUB\radio-client\GIU_ReBorn\obj\Debug\GIU_ReBorn.csproj.GenerateResource.Cache
+D:\S60\GITHUB\radio-client\GIU_ReBorn\obj\Debug\GIU_ReBorn.exe
+D:\S60\GITHUB\radio-client\GIU_ReBorn\obj\Debug\GIU_ReBorn.pdb
