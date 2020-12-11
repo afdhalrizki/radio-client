@@ -409,6 +409,7 @@
             // timer3
             // 
             this.timer3.Enabled = true;
+            this.timer3.Interval = 1;
             this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
             // 
             // Form1

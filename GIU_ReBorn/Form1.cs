@@ -50,10 +50,12 @@ namespace GIU_ReBorn
         private Int32 totalBytez = 0;
         private Int32 connectioncounter = 0;
 
-        string _clientIPAddress = "192.168.1.61";
+        string _clientIPAddress = "192.168.1.60";
         string _clientPort = "11111";
         Int16 buffertick;
         string dataIN1="tes";
+
+        string databufferq;
         /// <summary>
         ///Handler data queue
         /// </summary>
@@ -83,11 +85,13 @@ namespace GIU_ReBorn
         /// 
         private void processQueue(string output)
         {
+            textBox1.Text = dataBuffer.Count.ToString();
             if (dataBuffer.Count > 0)
             {
                 output = dataBuffer.Dequeue();
                 textBox5.Text = output;
-                Console.Write(output);
+                //Console.Write(output);
+                //serialPort1.Write(output);
                 //datatoTCP = output;
                 //Pemilihan metode pemrosesan data antrian sistem
                 try //Penambahan try catch agar system tidak error saat gagal
@@ -96,10 +100,10 @@ namespace GIU_ReBorn
                     {
                         parsingSerial(output.Substring(2, output.Length - 2), 1);
                     }
-                    else if (output.Substring(0, 2).CompareTo("F") == 0)
+                    else if ((output.Substring(0, 1).CompareTo("F") == 0) && (output.CompareTo("F\n")!=0))
                     {
                         ///FCSPROCESS, FOR NOW ONLY WRITE IT TO MERIAM
-                       serialPort1.Write(output.Substring(0, output.Length));
+                       serialPort1.Write(output.Substring(1, output.Length-1));
                         //processFCS(output);
                     }
                 }
@@ -178,16 +182,25 @@ namespace GIU_ReBorn
                     ///
                     /// Dicomment agar tidak membebani sistem dengan thread baru, dialihkan ke queue
                     ///
-                    //this.Invoke((System.Threading.ThreadStart)delegate
-                    //{
-                    //    textBox4.Text = dataSerialIn;
-                    //    parsingSerial(dataSerialIn, 1);
-                    //    dataIN1 = dataSerialIn; //Baru
-                    //    // Console.WriteLine(dataSerialIn);
-                    //    { }
-                    //});
+                    this.Invoke((System.Threading.ThreadStart)delegate
+                    {
+                        textBox4.Text = dataSerialIn;
+                        parsingSerial(dataSerialIn, 1);
+                        dataIN1 = dataSerialIn; //Baru
+                        // Console.WriteLine(dataSerialIn);
+                        if (dataIN1.Length > 1)
+                        {
+                            string[] dataq = dataIN1.Split('\n');
+                            foreach (string word in dataq)
+                            {
+                                dataBuffer.Enqueue("S1" + word + '\n');
+                            }
+                        }
+                        //dataBuffer.Enqueue("S1" + dataSerialIn);
+                        { }
+                    });
 
-                    dataBuffer.Enqueue("S1" + dataSerialIn);
+                    
                 }
             }
             catch
@@ -273,7 +286,7 @@ namespace GIU_ReBorn
         private void timer1_Tick(object sender, EventArgs e)
         {
             // ReCalling client open connection if it's failed
-            openConnection = clientSocketConnect.AsyncWaitHandle.WaitOne(timeoutMsec, false);
+            //openConnection = clientSocketConnect.AsyncWaitHandle.WaitOne(timeoutMsec, false);
             if (openConnection == false)
             {
 
@@ -338,9 +351,9 @@ namespace GIU_ReBorn
                 }
             }
             buffertick++;
-            if (buffertick > 2)
+            if (buffertick > 4)
             {
-                serialPort1.DiscardInBuffer();
+                serialPort1.DiscardOutBuffer();
                 buffertick = 0;
             }
         }
@@ -565,11 +578,48 @@ namespace GIU_ReBorn
                 dataReceivedStringFormat = Encoding.UTF8.GetString(clientReceiveBuffer, 0, totalBytesReceived);
                 //Memasukkan data dari FCS ke Buffer
                 //dataBuffer.Enqueue("F" + dataReceivedStringFormat);
-                string[] dataq = dataReceivedStringFormat.Split('\n');
-                foreach (string word in dataq)
+
+                databufferq += dataReceivedStringFormat;
+                    //dataBuffer.Enqueue('F' + dataReceivedStringFormat);
+
+                if (databufferq.Length >= 17)
                 {
-                    dataBuffer.Enqueue('F' + word + '\n');
+                    string[] dataq = databufferq.Split('\n');
+                    dataBuffer.Enqueue('F' + dataq[0] + '\n');
+                    databufferq = dataq[1];
+                    if (databufferq.Length >= 17)
+                    {
+                        dataBuffer.Enqueue('F' + databufferq+ '\n');
+                        databufferq = String.Empty;
+                    }
+                    
                 }
+                    //if (dataReceivedStringFormat.Contains("#\n") == true)
+                    //{
+                    //    //Untuk beberapa perintah dalam 1 waktu
+                    //    string[] dataq = dataReceivedStringFormat.Split('\n');
+                    //    foreach (string word in dataq)
+                    //    {
+                    //        dataBuffer.Enqueue('F' + word + '\n');
+                    //    }
+                    //}
+                    //else
+                    //{
+
+                    //}
+                //    else //Gimana caranya untuk perintah yang kepotong???
+                //    {
+                //        foreach (char c in dataReceivedStringFormat)
+                //        {
+                //            while (c != 0x0A)
+                //            {
+                //                databufferq += c;
+                //            }
+                //            dataBuffer.Enqueue('F' + databufferq+ 0x0A);
+                //            databufferq = string.Empty;
+                //        }
+                //        //dataBuffer.Enqueue('F' + databufferq);
+                //}
                 UpdateClientFormControls(totalBytesStringFormat, dataReceivedStringFormat, false);
             }
         }
