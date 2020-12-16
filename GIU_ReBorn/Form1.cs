@@ -86,6 +86,7 @@ namespace GIU_ReBorn
         private void processQueue(string output)
         {
             textBox1.Text = dataBuffer.Count.ToString();
+            clientDataToSend.Text = dataBuffer.Count.ToString();
             if (dataBuffer.Count > 0)
             {
                 output = dataBuffer.Dequeue();
@@ -148,7 +149,7 @@ namespace GIU_ReBorn
 
                 serialPort1.PortName = "COM1";
                 serialPort1.BaudRate = 9600;
-                serialPort1.ReadTimeout = 2000;
+                //serialPort1.ReadTimeout = 2000;
                 serialPort1.Open();
                 //serialPort1.WriteBufferSize = 1000;
                
@@ -182,26 +183,27 @@ namespace GIU_ReBorn
                     ///
                     /// Dicomment agar tidak membebani sistem dengan thread baru, dialihkan ke queue
                     ///
-                    this.Invoke((System.Threading.ThreadStart)delegate
+
+                    textBox4.Text = dataSerialIn;
+                    //parsingSerial(dataSerialIn, 1);
+                    dataIN1 = dataSerialIn; //Baru
+                    // Console.WriteLine(dataSerialIn);
+                    if (dataIN1.Length > 1)
                     {
-                        textBox4.Text = dataSerialIn;
-                        parsingSerial(dataSerialIn, 1);
-                        dataIN1 = dataSerialIn; //Baru
-                        // Console.WriteLine(dataSerialIn);
-                        if (dataIN1.Length > 1)
-                        {
+                        //this.Invoke((System.Threading.ThreadStart)delegate
+                        //{
                             string[] dataq = dataIN1.Split('\n');
                             foreach (string word in dataq)
                             {
-                                dataBuffer.Enqueue("S1" + word + '\n');
+                                dataBuffer.Enqueue("S1" + word + "\r\n");
                             }
-                        }
-                        //dataBuffer.Enqueue("S1" + dataSerialIn);
-                        { }
-                    });
 
-                    
+                            //{ }
+                        //});
+                    }
                 }
+
+                        //dataBuffer.Enqueue("S1" + dataSerialIn);
             }
             catch
             {
@@ -337,7 +339,7 @@ namespace GIU_ReBorn
                     connectioncounter = 0;
                 }
             }
-            else if (dataBuffer.Count > 0) //Mengirimkan hanya saat tidak ada antrian
+            else if (dataBuffer.Count == 0) //Mengirimkan hanya saat tidak ada antrian
             {
                 connectioncounter = 0;
                 //sendToFCS("a");
@@ -584,13 +586,19 @@ namespace GIU_ReBorn
 
                 if (databufferq.Length >= 17)
                 {
-                    string[] dataq = databufferq.Split('\n');
-                    dataBuffer.Enqueue('F' + dataq[0] + '\n');
-                    databufferq = dataq[1];
-                    if (databufferq.Length >= 17)
+                    try
                     {
-                        dataBuffer.Enqueue('F' + databufferq+ '\n');
-                        databufferq = String.Empty;
+                        string[] dataq = databufferq.Split('\n');
+                        dataBuffer.Enqueue('F' + dataq[0] + '\n');
+                        databufferq = dataq[1];
+                        if (databufferq.Length >= 17)
+                        {
+                            dataBuffer.Enqueue('F' + databufferq + '\n');
+                            databufferq = String.Empty;
+                        }
+                    }
+                    catch
+                    {
                     }
                     
                 }
